@@ -1,3 +1,16 @@
 <% @users.each do |user| %>
 User <%= user.id %>: <%= user.email %>
 <% end %>
+
+Current user: <%= @logged_in_user.email %>
+
+<% form_for @login_user do |f| %>
+  <%= f.label :email %>
+  <%= f.text_field :email %>
+  <%= f.label :password %>
+  <%= f.text_field :password %>
+  <%= f.label :password_confirmation %>
+  <%= f.text_field :password_confirmation %>
+
+  <%= f.submit %>
+<% end %>
