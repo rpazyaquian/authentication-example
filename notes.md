@@ -104,3 +104,18 @@ In a CRUD/RESTful context, we basically need a Session model. A Session has a un
     logged_in_user.posts.create(title: 'etc etc')  # and now we can do stuff with the user, like create new posts, edit comments, etc.
 
 So here's a question: let's say we make a new session. That session is tied to a user, it's got a hash to look it up by, etc. How do we pass it to the user so that they have it on their end? If I remember correctly, this is mostly done via *cookies*. I'll have to look those up real quick...
+
+...
+
+Crap, I think I kinda misinterpreted how Rails handles sessions. See, it kind of...*already handles them*. There is a `session` method that the server uses to make a new session every time a client it hasn't seen before connects to it. So, rails kinda does sessions by itself! We don't have to implement it, but we do have to figure out how to use it.
+
+"In Rails you can save and retrieve values using the session method."
+
+So we can do something like this:
+
+    # assuming the @current_user is set
+
+    session[:user_id] = @current_user.id  # the session records the current user's id
+    User.find(session[:user_id])  # and we can look up that user by the :user_id parameter in the session
+
+I'll have to play with this a little bit. Which means...time to build stuff!
