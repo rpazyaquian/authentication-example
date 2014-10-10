@@ -52,4 +52,14 @@ Let's try this out real quick.
 
 As you can see, when we create a User with a password, the password itself is not stored in the database. A digest of it (given some hash and salt) is stored instead.
 
-Cool. So now we can make new Users, and their passwords are some level of secure.
+# Authentication
+
+Cool. So now we can make new Users, and their passwords are some level of secure. Now, how can we tell if someone puts in a password, and they really are that person?
+
+It's pretty basic. Once the user inputs their password, we need to compare that password to the one in the database - except that the database doesn't have the password in it...just the digest.
+
+Luckily, ActiveRecord models have a method that makes *authenticating* easy. You just have to call `authenticate` on the user object and pass in the password they supplied. Like so:
+
+  user.authenticate('password')
+
+Try that out in your Rails console. If authentication is unsuccessful, then that line will return `false`. If it *is* successful, then the user object will be returned.
