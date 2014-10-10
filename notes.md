@@ -102,3 +102,5 @@ In a CRUD/RESTful context, we basically need a Session model. A Session has a un
     found_session = Session.where(session_id: session_variable)  # look up a Session by the id we assigned to session_variable
     logged_in_user = found_session.user  # when we find that Session, assume the client is the User that Session belongs to.
     logged_in_user.posts.create(title: 'etc etc')  # and now we can do stuff with the user, like create new posts, edit comments, etc.
+
+So here's a question: let's say we make a new session. That session is tied to a user, it's got a hash to look it up by, etc. How do we pass it to the user so that they have it on their end? If I remember correctly, this is mostly done via *cookies*. I'll have to look those up real quick...
