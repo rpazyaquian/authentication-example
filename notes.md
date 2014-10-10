@@ -23,3 +23,33 @@ So, our basic, very initial workflow will look like this:
     end
 
 Let's try this out real quick.
+
+    rails g migration CreateUsers email:string password_digest:string
+
+    # app/models/user.rb
+    class User < ActiveRecord::Base
+      has_secure_password
+    end
+
+    # db/seeds.rb
+    user1 = User.create(email: "email@example.com", password: "password", password_confirmation: "password")
+    user2 = User.create(email: "another_email@example.com", password: "another_password", password_confirmation: "another_password")
+
+    rake db:create db:migrate db:seed
+
+    rails c
+
+    [2] pry(main)> User.all
+      User Load (0.6ms)  SELECT "users".* FROM "users"
+    => [#<User:0x007fe5d89d3dc8
+      id: 1,
+      email: "email@example.com",
+      password_digest: "$2a$10$t6M2ZtmemcJxsHQcTv2FYOBste5saPPd.z36/zvd14vW/cgMDsh72">,
+     #<User:0x007fe5d89d37b0
+      id: 2,
+      email: "another_email@example.com",
+      password_digest: "$2a$10$ek.8BWzBcQ7lWfgD3PdpVOJFgEEokDoGPbtmpzMqCbreeO8Av1pCa">]
+
+As you can see, when we create a User with a password, the password itself is not stored in the database. A digest of it (given some hash and salt) is stored instead.
+
+Cool. So now we can make new Users, and their passwords are some level of secure.
